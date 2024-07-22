@@ -1,3 +1,6 @@
+from typing import List
+
+
 class Car:
     def __init__(self,
                  comfort_class: int,
@@ -21,7 +24,7 @@ class CarWashStation:
         self.average_rating = average_rating
         self.count_of_ratings = count_of_ratings
 
-    def serve_cars(self, cars) -> float:
+    def serve_cars(self, cars: List) -> float:
         total_income = 0.0
         for car in cars:
             if car.clean_mark < self.clean_power:
@@ -29,7 +32,7 @@ class CarWashStation:
                 total_income += income
         return round(total_income, 1)
 
-    def calculate_washing_price(self, car) -> float:
+    def calculate_washing_price(self, car: Car) -> float:
         if not isinstance(car, Car):
             raise ValueError("The argument must be a Car instance")
         if car.clean_mark >= self.clean_power:

@@ -9,13 +9,8 @@ class Car:
             brand: str
     ) -> None:
 
-        if comfort_class < 1 or comfort_class > 10:
-            raise ValueError("comfort_class must be between 1 and 10")
-        if clean_mark < 0 or clean_mark > 10:
-            raise ValueError("clean_mark must be between 0 and 10")
-
-        self.comfort_class = comfort_class
-        self.clean_mark = clean_mark
+        self.comfort_class = max(1, min(comfort_class, 7))
+        self.clean_mark = max(0, min(clean_mark, 10))
         self.brand = brand
 
 
@@ -28,19 +23,10 @@ class CarWashStation:
             count_of_ratings: int
     ) -> None:
 
-        if distance_from_city_center <= 0:
-            distance_from_city_center = 1.0
-        if clean_power < 0:
-            clean_power = 1
-        if average_rating < 1.0 or average_rating > 5.0:
-            average_rating = 3.0
-        if count_of_ratings < 0:
-            count_of_ratings = 0
-
-        self.distance_from_city_center = distance_from_city_center
-        self.clean_power = clean_power
-        self.average_rating = average_rating
-        self.count_of_ratings = count_of_ratings
+        self.distance_from_city_center = max(1.0, min(distance_from_city_center, 10.0))
+        self.clean_power = max(1, min(clean_power, 10))
+        self.average_rating = round(max(1.0, min(average_rating, 5.0)), 1)
+        self.count_of_ratings = max(count_of_ratings, 0)
 
     def serve_cars(self, cars: List[Car]) -> float:
         total_income = sum(

@@ -2,10 +2,18 @@ from typing import List
 
 
 class Car:
-    def __init__(self,
-                 comfort_class: int,
-                 clean_mark: int,
-                 brand: str) -> None:
+    def __init__(
+            self,
+            comfort_class: int,
+            clean_mark: int,
+            brand: str
+    ) -> None:
+
+        if comfort_class < 1 or comfort_class > 10:
+            raise ValueError("comfort_class must be between 1 and 10")
+        if clean_mark < 0 or clean_mark > 10:
+            raise ValueError("clean_mark must be between 0 and 10")
+
         self.comfort_class = comfort_class
         self.clean_mark = clean_mark
         self.brand = brand
@@ -19,16 +27,27 @@ class CarWashStation:
             average_rating: float,
             count_of_ratings: int
     ) -> None:
+
+        if distance_from_city_center <= 0:
+            distance_from_city_center = 1.0
+        if clean_power < 0:
+            clean_power = 1
+        if average_rating < 1.0 or average_rating > 5.0:
+            average_rating = 3.0
+        if count_of_ratings < 0:
+            count_of_ratings = 0
+
         self.distance_from_city_center = distance_from_city_center
         self.clean_power = clean_power
         self.average_rating = average_rating
         self.count_of_ratings = count_of_ratings
 
     def serve_cars(self, cars: List[Car]) -> float:
-        total_income = 0.0
-        for car in cars:
-            if car.clean_mark < self.clean_power:
-                total_income += self.wash_single_car(car)
+        total_income = sum(
+            self.wash_single_car(car)
+            for car in cars
+            if car.clean_mark < self.clean_power
+        )
         return round(total_income, 1)
 
     def calculate_washing_price(self, car: Car) -> float:

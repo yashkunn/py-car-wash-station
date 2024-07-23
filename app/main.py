@@ -23,7 +23,9 @@ class CarWashStation:
             count_of_ratings: int
     ) -> None:
 
-        self.distance_from_city_center = max(1.0, min(distance_from_city_center, 10.0))
+        self.distance_from_city_center = max(
+            1.0, min(distance_from_city_center, 10.0)
+        )
         self.clean_power = max(1, min(clean_power, 10))
         self.average_rating = round(max(1.0, min(average_rating, 5.0)), 1)
         self.count_of_ratings = max(count_of_ratings, 0)
